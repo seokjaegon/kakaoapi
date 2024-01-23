@@ -1,0 +1,16 @@
+eclipse.preferences.version=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.devtools=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.thymeleaf=1
+org.springframework.ide.eclipse.boot.wizard.PopularityTracker.web=1
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.artifactId=map-line
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.bootVersion=3.2.1
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.description=\uC9C0\uB3C4\uC5D0 \uACBD\uB85C \uADF8\uB9AC\uAE30
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.groupId=kr.co.icia
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.javaVersion=17
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.language=java
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.name=map-line
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.packageName=kr.co.icia.mapline
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.packaging=jar
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.type=MAVEN
+org.springframework.ide.eclipse.boot.wizard.PreferredSelections.version=0.0.1-SNAPSHOT
+org.springframework.ide.eclipse.boot.wizard.initializr.url=https\://start.spring.io\n

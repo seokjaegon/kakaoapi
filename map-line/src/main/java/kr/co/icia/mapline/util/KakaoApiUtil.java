@@ -50,6 +50,8 @@ public class KakaoApiUtil {
 		HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 		// 응답 본문을 추출하여 responseBody에 문자열로 저장한다.
 		String responseBody = response.body();
+		
+		System.out.println("자동차길찾기 응답 본문 : "+responseBody);
 
 		List<Point> pointList = new ArrayList<Point>();
 		

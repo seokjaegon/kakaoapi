@@ -68,10 +68,14 @@ public class MapController {
 	 * 
 	 */
 	@GetMapping("/map/address/point") // url : /map/address/point
-	public String getMapAddressPoint(@RequestParam(required = false) String address, Model model)
+	public String getMapAddressPoint(@RequestParam(required = false) String address, // 주소 정보를 요청 파라미터로 받아온다.
+			Model model)
 			throws IOException, InterruptedException {
+		// 만약 주소가 null이 아니고 비어있지 않으면
 		if (address != null && !address.isEmpty()) {
+			// point라는 변수에 주소에 대한 위도와 경도 값을 받는다.
 			Point point = KakaoApiUtil.getPointByAddress(address);
+			// "point"라는 이름으로 point를 address_point.html로 전달한다.
 			model.addAttribute("point", point);
 		}
 		return "map/address_point";
@@ -87,15 +91,21 @@ public class MapController {
 	 * 
 	 */
 	@GetMapping("/map/marker") // url : /map/marker
-	public String getMapMarker(@RequestParam(required = false) String fromAddress, //
-			@RequestParam(required = false) String toAddress, //
+	public String getMapMarker(@RequestParam(required = false) String fromAddress, // 출발지 주소 정보를 요청 파라미터로 받는다.
+			@RequestParam(required = false) String toAddress, // 도착지 주소 정보를 요청 파라미터로 받는다.
 			Model model) throws IOException, InterruptedException {
+		// 만약 출발지 주소가 null이 아니고 비어있지 않으면
 		if (fromAddress != null && !fromAddress.isEmpty()) {
+			// fromPoint(출발지)에 출발지 주소의 위도와 경도 값을 전달한다.
 			Point fromPoint = KakaoApiUtil.getPointByAddress(fromAddress);
+			// "fromPoint"라는 이름으로 fromPoint를 marker.html로 전달한다.
 			model.addAttribute("fromPoint", fromPoint);
 		}
+		// 만약 도착지 주소가 null이 아니고 비어있지 않으면
 		if (toAddress != null && !toAddress.isEmpty()) {
+			// toPoint(도착지)에 도착지 주소의 위도와 경도 값을 전달한다.
 			Point toPoint = KakaoApiUtil.getPointByAddress(toAddress);
+			// "toPoint"라는 이름으로 toPoint를 marker.html로 전달한다.
 			model.addAttribute("toPoint", toPoint);
 		}
 		return "map/marker";

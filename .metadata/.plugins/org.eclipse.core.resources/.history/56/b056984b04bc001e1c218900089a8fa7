@@ -1,0 +1,23 @@
+package kr.co.icia.mapline.dto;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
+public class Places {
+//	private List<Document> documents;
+//	private Meta meta;
+//	
+//	public Meta getMeta() {
+//		return meta;
+//	}
+//	
+//	public List<Document> getDocuments() {
+//		return documents;
+//	}
+//	
+//	@JsonIgnoreProperties(ignoreUnknown = true)
+//	public static class Meta{
+//		private boolean is_end;
+//		private int pageable_count;
+//	}
+}

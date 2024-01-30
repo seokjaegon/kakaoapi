@@ -112,8 +112,8 @@ public class MapController {
             for (int i=1; i < pharmacyList.size(); i++) { //pharmacyList의 크기만큼 반복
             	KakaoApiUtil.Pharmacy prevPharmacy = pharmacyList.get(i-1);
             	KakaoApiUtil.Pharmacy nextPharmacy = pharmacyList.get(i);
-            	Point fromPoint = KakaoApiUtil.getPointByKeyword(keyword,fromPoint.getX(),fromPoint.getY()); 
-                Point toPoint = KakaoApiUtil.getPointByAddress(toPoint);
+            	Point fromPoint = KakaoApiUtil.getPointsByKeyword(keyword,fromPoint.getX(),fromPoint.getY()); 
+                Point toPoint = KakaoApiUtil.getPointsByKeyword(keyword,toPoint.getX(), toPoint.getY());
             }
             System.out.println(cnt); //pharmacyList의 크기를 출력
             String pharmacyListJson = new ObjectMapper().writer().writeValueAsString(pharmacyList); //pharmacyList를 json형태로 변환

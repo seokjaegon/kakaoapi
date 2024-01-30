@@ -74,16 +74,20 @@ public class KakaoApiUtil {
                 .build();
         //요청을 보내서 온 응답을 response에 저장   //client인스턴스의 send메서드에 request(api요청 양식)을 담아서 api 요청
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        System.out.println("response: " + response);
         String responseBody = response.body();//응답받은 값의 body값을 responseBody에 저장
         System.out.println("Point: " + responseBody);//출력
 
         //밑의 줄을 보기 전에 밑에 정의된 KakaoAddress 클래스 참조
         KakaoAddress kakaoAddress = new ObjectMapper().readValue(responseBody, KakaoAddress.class);//responseBody를 kakaoAdress 인스턴스에 저장함
+        System.out.println("kakaoAddress: " + kakaoAddress);
         List<KakaoAddress.Document> documents = kakaoAddress.getDocuments(); //응답받은 값(kakaoaddress)을 documents(document로 이루어진 List)에 저장
+        System.out.println("documents: " + documents);
         if (documents.isEmpty()) { // 값이 없을 경우 오류 가능성이 있어 null처리
             return null;
         }
         KakaoAddress.Document document = documents.get(0); //요청한 좌표값은 어차피 하나이므로 documents리스트의 첫째 값을 받아 document 인스턴스에 저장
+        System.out.println("document: " + document);
         return new Point(document.getX(), document.getY()); //document의 x, y값을 Point 객체에 담아 반환
     }
 
@@ -198,8 +202,17 @@ public class KakaoApiUtil {
         public List<Document> getDocuments() {
             return documents;
         } //getter
+        
+        
 
-        @JsonIgnoreProperties(ignoreUnknown = true)
+        @Override
+		public String toString() {
+			return "KakaoAddress [documents=" + documents + "]";
+		}
+
+
+
+		@JsonIgnoreProperties(ignoreUnknown = true)
         public static class Document {
             private Double x;
             private Double y;
@@ -211,6 +224,13 @@ public class KakaoApiUtil {
             public Double getY() {
                 return y;
             }
+
+			@Override
+			public String toString() {
+				return "Document [x=" + x + ", y=" + y + "]";
+			}
+            
+            
         }
     }
 
@@ -230,6 +250,13 @@ public class KakaoApiUtil {
         public Double getY() {
             return y;
         }
+
+		@Override
+		public String toString() {
+			return "Point [x=" + x + ", y=" + y + "]";
+		}
+        
+        
 
     }
 

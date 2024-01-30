@@ -12,7 +12,6 @@ INDEX VERSION 1.134+C:\development\map-line\.metadata\.plugins\org.eclipse.jdt.c
 3637927596.index
 1865797976.index
 1676867768.index
-3596867945.index
 1738958556.index
 4040156412.index
 3555457799.index

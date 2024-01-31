@@ -108,15 +108,23 @@ public class MapController {
             List<KakaoApiUtil.Pharmacy> pharmacyList = KakaoApiUtil.getPointsByKeyword(keyword, x, y); //keyword, x, y값을 getPointsByKeyword에 넣어서 반환되는 Pharmacy로 구성된 List를 저장
             int cnt = 0; //pharmacyList의 크기를 저장할 변수
             assert pharmacyList != null;//pharmacyList가 null이 아닐 때 실행
+            
             List<Point> pointList = new ArrayList<>();
             for (int i=1; i < pharmacyList.size(); i++) { //pharmacyList의 크기만큼 반복
             	KakaoApiUtil.Pharmacy prevPharmacy = pharmacyList.get(i-1);
             	KakaoApiUtil.Pharmacy nextPharmacy = pharmacyList.get(i);
-            	Point fromPoint = KakaoApiUtil.getPointsByKeyword(keyword,fromPoint.getX(),fromPoint.getY()); 
-                Point toPoint = KakaoApiUtil.getPointsByKeyword(keyword,toPoint.getX(), toPoint.getY());
+            	Point fromPoint = new Point(prevPharmacy.getX(), prevPharmacy.getY()); 
+                Point toPoint = new Point(nextPharmacy.getX(), nextPharmacy.getY());
+                
+                pointList.addAll(KakaoApiUtil.getVehiclePaths(fromPoint, toPoint));
+            }
+            for (KakaoApiUtil.Pharmacy pharmacy : pharmacyList) {
+            	cnt++; //pharmacyList의 크기를 저장
             }
             System.out.println(cnt); //pharmacyList의 크기를 출력
+            String pointListjson = new ObjectMapper().writer().writeValueAsString(pointList);//pharmacyList를 json형태로 변환
             String pharmacyListJson = new ObjectMapper().writer().writeValueAsString(pharmacyList); //pharmacyList를 json형태로 변환
+            model.addAttribute("pointListJson", pointListjson);
             model.addAttribute("pharmacyList", pharmacyListJson); //html로 보냄
             System.out.println("실행됨"); //실행됐는지 확인
         }

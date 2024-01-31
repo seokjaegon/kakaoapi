@@ -103,12 +103,13 @@ public class KakaoApiUtil {
         HttpClient client = HttpClient.newHttpClient(); //api 요청을 보낼 수 있게 하는 http client 객체
         String url = "https://dapi.kakao.com/v2/local/search/keyword.json"; //api 주소
         url += "?query=" + URLEncoder.encode(keyword, "UTF-8") //api 주소에 인코딩 방식 추가
-                + "&x=" + Double.parseDouble(x) //api 주소에 x값 추가
-                + "&y=" + Double.parseDouble(y) //api 주소에 y값 추가
+                + "&x=" + Double.parseDouble("126.675113024566") //api 주소에 x값 추가
+                + "&y=" + Double.parseDouble("37.4388938204128") //api 주소에 y값 추가
                 + "&radius=5000";
-
+        System.out.println(x + y);
         HttpRequest request = HttpRequest.newBuilder() //api 요청 양식
                 .header("Authorization", "KakaoAK " + REST_API_KEY) //api 요청 헤더(api 인증키 포함)
+                .header("Content-Type", "application/json")//
                 .uri(URI.create(url)) //api 요청 주소
                 .GET() //GET방식으로 가져옴
                 .build(); //api 요청 양식 완성
@@ -124,13 +125,16 @@ public class KakaoApiUtil {
         if (documents.isEmpty() || meta == null) { // 값이 없을 경우 오류 가능성이 있어 null처리
             return null; //null 반환
         }
+        
+        int firstPageMarker = 15;
         for (Places.Document document : documents) { //enhanced for문으로 documents안의 document들을 각각 탐색하여 Pharmacy 객체를 생성하고 pharmacyList에 저장
             Pharmacy pharmacy = new Pharmacy(Double.parseDouble(document.getX()), //document의 x, y값을 Pharmacy 객체에 담아 pharmacyList에 저장
                     Double.parseDouble(document.getY()), document.getPlace_name(), document.getPhone(), document.getPlace_url()); //document의 place_name, phone값을 Pharmacy 객체에 담아 pharmacyList에 저장
             pharmacyList.add(pharmacy); //pharmacyList에 pharmacy 객체를 추가
+            firstPageMarker--;
         }
         if (meta.getTotal_count() > 15) { //검색된 장소가 15개를 넘어갈 경우
-            for (int i = 1; i <= meta.getTotal_count() / 15; i++) { //15개씩 나눠서 검색
+            for (int i = 1; i <= Math.min(meta.getTotal_count() / 15, 15); i++) { //15개씩 나눠서 검색
                 String url2 = url + "&page=" + (i + 1); //api 주소에 page값 추가
                 System.out.println(url2); //출력
                 HttpRequest request2 = HttpRequest.newBuilder() //api 요청 양식
@@ -148,9 +152,13 @@ public class KakaoApiUtil {
                     return null;//null 반환
                 }
                 for (Places.Document document : documents2) {//enhanced for문으로 documents2안의 document들을 각각 탐색하여 Pharmacy 객체를 생성하고 pharmacyList에 저장
-                    Pharmacy pharmacy2 = new Pharmacy(Double.parseDouble(document.getX()),//document의 x, y값을 Pharmacy 객체에 담아 pharmacyList에 저장
-                            Double.parseDouble(document.getY()), document.getPlace_name(), document.getPhone(), document.getPlace_url());//document의 place_name, phone값을 Pharmacy 객체에 담아 pharmacyList에 저장
-                    pharmacyList.add(pharmacy2);//pharmacyList에 pharmacy 객체를 추가
+                    if (firstPageMarker > 0) {
+                    	Pharmacy pharmacy2 = new Pharmacy(Double.parseDouble(document.getX()),//document의 x, y값을 Pharmacy 객체에 담아 pharmacyList에 저장
+                                Double.parseDouble(document.getY()), document.getPlace_name(), document.getPhone(), document.getPlace_url());//document의 place_name, phone값을 Pharmacy 객체에 담아 pharmacyList에 저장
+                        pharmacyList.add(pharmacy2);//pharmacyList에 pharmacy 객체를 추가
+                    } else {
+                    	break;
+                    }
                 }
             }
         }
